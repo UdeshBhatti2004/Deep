@@ -13,14 +13,21 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 
 // PROCESS JOBS
 const processJobs = async () => {
+
+  console.log("Checking jobs...");
+
   try {
+
     // CHECK RUNNING JOBS
     const runningJobs = await Job.countDocuments({
       status: "running",
     });
 
+    console.log("Running Jobs:", runningJobs);
+
     // MAX 2 RUNNING
     if (runningJobs >= 2) {
+      console.log("Max running jobs reached");
       return;
     }
 
@@ -29,8 +36,14 @@ const processJobs = async () => {
       status: "queued",
     }).limit(2 - runningJobs);
 
+    console.log("Queued Jobs:", jobs);
+
     for (const job of jobs) {
+
+      console.log("Starting Processing");
+
       try {
+
         // UPDATE STATUS
         job.status = "running";
 
@@ -44,6 +57,8 @@ const processJobs = async () => {
 
         // TRAIN MODEL
         const response = await trainModel(job);
+
+        console.log("Train Model Response:", response);
 
         // COMPLETE JOB
         job.status = "completed";
@@ -59,7 +74,9 @@ const processJobs = async () => {
         await job.save();
 
         console.log(`Completed Job ${job._id}`);
+
       } catch (error) {
+
         job.status = "failed";
 
         job.logs.push({
@@ -68,13 +85,22 @@ const processJobs = async () => {
 
         await job.save();
 
-        console.log(error.message);
+        console.log("INNER ERROR:");
+        console.log(error);
+
       }
+
     }
+
   } catch (error) {
-    console.log(error.message);
+
+    console.log("OUTER ERROR:");
+    console.log(error);
+
   }
+
 };
 
-// RUN EVERY 5 SEC
+processJobs();
+
 setInterval(processJobs, 5000);

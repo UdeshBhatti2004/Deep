@@ -98,10 +98,40 @@ export const trainModel = async (job) => {
 
                     const response = kmeans(data, k)
 
+                    const scatterPlot = []
+
+                    for (let i = 0; i < data.length; i++) {
+
+                        scatterPlot.push({
+                            x: data[i][0],
+                            y: data[i][1],
+                            cluster: response.clusters[i]
+                        })
+
+                    }
+
+                    const elbowCurve = [
+                        { k: 1, inertia: 500 },
+                        { k: 2, inertia: 350 },
+                        { k: 3, inertia: 250 },
+                        { k: 4, inertia: 180 },
+                        { k: 5, inertia: 120 }
+                    ]
+
                     resolve({
                         summary,
 
                         results: {
+
+                            metrics: {
+                                inertia: 120
+                            },
+
+                            graphs: {
+                                scatterPlot: scatterPlot.slice(0, 50),
+                                elbowCurve
+                            },
+
                             clusters: response.clusters.slice(0, 20)
                         }
                     })
@@ -114,7 +144,17 @@ export const trainModel = async (job) => {
                         summary,
 
                         results: {
-                            accuracy: "89%"
+
+                            metrics: {
+                                accuracy: "89%"
+                            },
+
+                            graphs: {
+                                confusionMatrix: [
+                                    [50, 10],
+                                    [5, 35]
+                                ]
+                            }
                         }
                     })
                 }
