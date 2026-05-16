@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useGetJobsQuery } from "../features/jobsApi"
+import Navbar from "../components/Navbar"
 
 const JobsList = () => {
 
@@ -43,7 +44,14 @@ const JobsList = () => {
   }
 
   return (
+
+    <>
+
+    <Navbar />
+
     <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#020617] text-white p-6">
+
+      
 
       <div className="max-w-7xl mx-auto">
 
@@ -287,6 +295,8 @@ const JobsList = () => {
       </div>
 
     </div>
+
+    </>
   )
 }
 

@@ -14,6 +14,7 @@ import {
   BarChart,
   Bar,
 } from "recharts"
+import Navbar from "../components/Navbar"
 
 const JobDetails = () => {
 
@@ -59,24 +60,28 @@ const JobDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#020617] text-white p-6">
+
+      <>
+      <Navbar />
+
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#020617] text-white px-4 sm:px-6 py-6">
 
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
 
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-10">
 
           <div>
 
             <Link
               to="/"
-              className="text-blue-400 hover:text-blue-300 transition duration-300"
+              className="text-blue-400 hover:text-blue-300 transition-all duration-300"
             >
               ← Back to Dashboard
             </Link>
 
-            <h1 className="text-4xl md:text-5xl font-bold mt-4 break-all">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 break-words leading-tight">
               {job.dataset}
             </h1>
 
@@ -87,48 +92,48 @@ const JobDetails = () => {
           </div>
 
           <span
-            className={`px-5 py-3 rounded-full text-lg font-semibold h-fit ${getStatusColor(job.status)}`}
+            className={`px-5 py-3 rounded-full text-lg font-semibold h-fit w-fit ${getStatusColor(job.status)}`}
           >
             {job.status}
           </span>
 
         </div>
 
-        {/* Top Cards */}
+        {/* Summary Cards */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
 
-          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
             <p className="text-gray-400 text-lg">
               Total Rows
             </p>
 
-            <h2 className="text-5xl font-bold text-blue-400 mt-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-400 mt-3">
               {job.summary?.rows || 0}
             </h2>
 
           </div>
 
-          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
             <p className="text-gray-400 text-lg">
               Total Columns
             </p>
 
-            <h2 className="text-5xl font-bold text-yellow-400 mt-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400 mt-3">
               {job.summary?.columns?.length || 0}
             </h2>
 
           </div>
 
-          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+          <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
             <p className="text-gray-400 text-lg">
               Null Values
             </p>
 
-            <h2 className="text-5xl font-bold text-green-400 mt-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-400 mt-3">
               {job.summary?.nulls || 0}
             </h2>
 
@@ -138,7 +143,7 @@ const JobDetails = () => {
 
         {/* Dataset Columns */}
 
-        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg mb-10">
+        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300 mb-10">
 
           <h2 className="text-2xl font-bold mb-6">
             Dataset Columns
@@ -150,7 +155,7 @@ const JobDetails = () => {
               job.summary?.columns?.map((column, index) => (
                 <div
                   key={index}
-                  className="bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl text-gray-300"
+                  className="bg-slate-800 border border-slate-600 px-3 sm:px-4 py-2 rounded-xl text-gray-300 text-sm sm:text-base hover:border-blue-500 transition-all duration-300"
                 >
                   {column}
                 </div>
@@ -163,27 +168,27 @@ const JobDetails = () => {
 
         {/* Metrics */}
 
-        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg mb-10">
+        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300 mb-10">
 
           <h2 className="text-2xl font-bold mb-6">
             Model Metrics
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
             {
               Object.entries(job.results?.metrics || {}).map(([key, value]) => (
 
                 <div
                   key={key}
-                  className="bg-slate-800 border border-slate-700 rounded-2xl p-6"
+                  className="bg-slate-800 border border-slate-700 rounded-2xl p-4 sm:p-6"
                 >
 
                   <p className="text-gray-400 capitalize text-lg">
                     {key}
                   </p>
 
-                  <h2 className="text-4xl font-bold mt-3 text-blue-400 break-all">
+                  <h2 className="text-3xl sm:text-4xl font-bold mt-3 text-blue-400 break-words">
                     {value}
                   </h2>
 
@@ -193,13 +198,13 @@ const JobDetails = () => {
 
             {
               job.results?.slope && (
-                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 sm:p-6">
 
                   <p className="text-gray-400 text-lg">
                     Slope
                   </p>
 
-                  <h2 className="text-4xl font-bold mt-3 text-yellow-400 break-all">
+                  <h2 className="text-3xl sm:text-4xl font-bold mt-3 text-yellow-400 break-words">
                     {job.results.slope.toFixed(2)}
                   </h2>
 
@@ -209,13 +214,13 @@ const JobDetails = () => {
 
             {
               job.results?.intercept && (
-                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 sm:p-6">
 
                   <p className="text-gray-400 text-lg">
                     Intercept
                   </p>
 
-                  <h2 className="text-4xl font-bold mt-3 text-green-400 break-all">
+                  <h2 className="text-3xl sm:text-4xl font-bold mt-3 text-green-400 break-words">
                     {job.results.intercept.toFixed(2)}
                   </h2>
 
@@ -239,28 +244,38 @@ const JobDetails = () => {
               {
                 job.results.graphs.scatterPlot && (
 
-                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
                     <h2 className="text-2xl font-bold mb-6">
                       K-Means Scatter Plot
                     </h2>
 
-                    <div className="h-[400px]">
+                    <div className="h-[300px] sm:h-[400px]">
 
                       <ResponsiveContainer width="100%" height="100%">
 
                         <ScatterChart>
 
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="#334155"
+                          />
 
-                          <XAxis dataKey="x" />
+                          <XAxis
+                            dataKey="x"
+                            stroke="#94a3b8"
+                          />
 
-                          <YAxis dataKey="y" />
+                          <YAxis
+                            dataKey="y"
+                            stroke="#94a3b8"
+                          />
 
                           <Tooltip />
 
                           <Scatter
                             data={job.results.graphs.scatterPlot}
+                            fill="#3b82f6"
                           />
 
                         </ScatterChart>
@@ -278,13 +293,13 @@ const JobDetails = () => {
               {
                 job.results.graphs.elbowCurve && (
 
-                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
                     <h2 className="text-2xl font-bold mb-6">
                       Elbow Curve
                     </h2>
 
-                    <div className="h-[400px]">
+                    <div className="h-[300px] sm:h-[400px]">
 
                       <ResponsiveContainer width="100%" height="100%">
 
@@ -292,17 +307,27 @@ const JobDetails = () => {
                           data={job.results.graphs.elbowCurve}
                         >
 
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="#334155"
+                          />
 
-                          <XAxis dataKey="k" />
+                          <XAxis
+                            dataKey="k"
+                            stroke="#94a3b8"
+                          />
 
-                          <YAxis />
+                          <YAxis
+                            stroke="#94a3b8"
+                          />
 
                           <Tooltip />
 
                           <Line
                             type="monotone"
                             dataKey="inertia"
+                            stroke="#3b82f6"
+                            strokeWidth={3}
                           />
 
                         </LineChart>
@@ -320,13 +345,13 @@ const JobDetails = () => {
               {
                 job.results.graphs.confusionMatrix && (
 
-                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg xl:col-span-2">
+                  <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300 xl:col-span-2">
 
                     <h2 className="text-2xl font-bold mb-6">
                       Confusion Matrix
                     </h2>
 
-                    <div className="h-[400px]">
+                    <div className="h-[300px] sm:h-[400px]">
 
                       <ResponsiveContainer width="100%" height="100%">
 
@@ -351,19 +376,27 @@ const JobDetails = () => {
                           ]}
                         >
 
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="#334155"
+                          />
 
-                          <XAxis dataKey="name" />
+                          <XAxis
+                            dataKey="name"
+                            stroke="#94a3b8"
+                          />
 
-                          <YAxis />
+                          <YAxis
+                            stroke="#94a3b8"
+                          />
 
                           <Tooltip />
 
                           <Bar
-  dataKey="value"
-  fill="#3b82f6"
-  radius={[10, 10, 0, 0]}
-/>
+                            dataKey="value"
+                            fill="#3b82f6"
+                            radius={[10, 10, 0, 0]}
+                          />
 
                         </BarChart>
 
@@ -381,7 +414,7 @@ const JobDetails = () => {
 
         {/* Logs */}
 
-        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 shadow-lg">
+        <div className="bg-[#1e293b] border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
 
           <h2 className="text-2xl font-bold mb-6">
             Processing Logs
@@ -396,7 +429,7 @@ const JobDetails = () => {
 
                   <div
                     key={index}
-                    className="bg-slate-800 border border-slate-700 rounded-xl p-4"
+                    className="bg-slate-800 border border-slate-700 border-l-4 border-l-blue-500 rounded-xl p-4"
                   >
 
                     <p className="text-gray-300">
@@ -407,7 +440,7 @@ const JobDetails = () => {
                 ))
               ) : (
 
-                <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+                <div className="bg-slate-800 border border-slate-700 border-l-4 border-l-blue-500 rounded-xl p-4">
 
                   <p className="text-gray-400">
                     No logs available
@@ -424,6 +457,8 @@ const JobDetails = () => {
       </div>
 
     </div>
+
+    </>
   )
 }
 
