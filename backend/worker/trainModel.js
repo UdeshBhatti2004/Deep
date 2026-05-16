@@ -2,7 +2,7 @@ import fs from "fs"
 import csv from "csv-parser"
 import path from "path"
 import { kmeans } from "ml-kmeans"
-import SimpleLinearRegression from "ml-regression-simple-linear"
+import SLR from "ml-regression-simple-linear"
 
 export const trainModel = async (job) => {
 
@@ -66,7 +66,7 @@ export const trainModel = async (job) => {
 
                     })
 
-                    const regression = new SimpleLinearRegression(X, Y)
+                    const regression = new SLR(X, Y)
 
                     resolve({
                         summary,
