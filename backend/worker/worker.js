@@ -60,6 +60,7 @@ const processJobs = async () => {
 
         console.log("Train Model Response:", response);
 
+         await new Promise((resolve) => setTimeout(resolve, 10000))
         // COMPLETE JOB
         job.status = "completed";
 
